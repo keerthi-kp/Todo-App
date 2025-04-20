@@ -9,7 +9,6 @@ A full-stack Todo application built with **Express**, **MongoDB**, and **React**
 - ✅ Create, update, and delete tasks
 - 📌 Mark tasks as complete/incomplete
 - 📂 Full-stack integration (Express + MongoDB + React)
-- 🔐 JWT-based authentication (optional)
 - 🌐 RESTful API
 - 💾 MongoDB database
 - ⚙️ Environment-based config via `.env`
