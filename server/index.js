@@ -17,7 +17,9 @@ mongoose.connect(process.env.MONGO_URI)
     process.exit(1); // Optional: Stop the server if DB connection fails
   });
 
-
+app.get('/', (req, res) => {
+  res.send('🚀 Todo API is running!');
+});
 app.get('/todos',async (req,res)=>{
   const alltodos= await TodoModel.find()
   res.json(alltodos)
