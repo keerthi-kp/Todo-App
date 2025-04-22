@@ -8,9 +8,14 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
-mongoose.connect(process.env.MONGO_URI).then(() => {
-  console.log("MongoDB connected");
-});
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("MongoDB connected");
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    process.exit(1); // Optional: Stop the server if DB connection fails
+  });
 
 
 app.get('/todos',async (req,res)=>{
@@ -41,7 +46,8 @@ app.delete("/todos/:id",async (req,res)=>{
     res.json({message:'todo deleted',deletedtodo})
   }
   catch(err){
-    res.status(500).send("Error deleting todo",err)
+    res.status(500).json({ message: "Error deleting todo", error: err });
+
   }
 })
 app.put("/todos/:id",async (req,res)=>{
@@ -56,6 +62,7 @@ app.put("/todos/:id",async (req,res)=>{
 })
 
 
-app.listen(3050,
-  console.log('Server listening on port: 3050')
-)  
+const PORT = process.env.PORT || 3050;
+app.listen(PORT, () => {
+  console.log(`Server listening on port: ${PORT}`);
+});
