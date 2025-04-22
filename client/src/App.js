@@ -3,18 +3,19 @@ import axios from 'axios';
 import './App.css'; 
 
 function App() {
+  const BASE_URL = "https://todo-app-backend-9xbt.onrender.com";
   const [task, setTask] = useState("");
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3050/todos")
+    axios.get(`${BASE_URL}/todos`)
       .then((response) => setTodos(response.data))
       .catch((err) => console.log("Error occurred:", err));
   }, []);
 
   const createTask = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3050/todos", { text: task })
+    axios.post(`${BASE_URL}/todos`, { text: task })
       .then((res) => {
         setTodos([...todos, res.data]);
         setTask("");
@@ -22,14 +23,14 @@ function App() {
       .catch(err => console.error(err));
   };
   const deleteTask = (id) => {
-    axios.delete(`http://localhost:3050/todos/${id}`)
+    axios.delete(`${BASE_URL}/todos/${id}`)
       .then(() => {
         setTodos(todos.filter(todo => todo._id !== id));
       })
       .catch(err => console.error("Error deleting task:", err));
   };
   const toggleComplete = (id, completed) => {
-    axios.put(`http://localhost:3050/todos/${id}`, { completed })
+    axios.put(`${BASE_URL}/todos/${id}`, { completed })
       .then((res) => {
         setTodos(todos.map(todo =>
           todo._id === id ? res.data : todo
